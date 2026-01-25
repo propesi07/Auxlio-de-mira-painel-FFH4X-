@@ -17,11 +17,12 @@
         .menu-container { width: 380px; background-color: #0b0b0b; border-radius: 12px; overflow: hidden; border: 1px solid #333; display: none; }
         .header { background-color: var(--main-color); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; font-weight: bold; }
         
-        .tabs { display: flex; gap: 2px; padding: 10px; background: #0b0b0b; border-bottom: 1px solid #222; overflow-x: auto; }
-        .tab { background: #2a2a2a; color: #bbb; padding: 7px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; text-align: center; white-space: nowrap; }
+        .tabs { display: flex; gap: 2px; padding: 10px; background: #0b0b0b; border-bottom: 1px solid #222; overflow-x: auto; scrollbar-width: none; }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab { background: #2a2a2a; color: #bbb; padding: 7px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; text-align: center; white-space: nowrap; flex-shrink: 0; }
         .tab.active { background: var(--main-color); color: white; }
 
-        .content-section { display: none; padding: 15px; color: #eee; min-height: 350px; }
+        .content-section { display: none; padding: 15px; color: #eee; min-height: 380px; overflow-y: auto; }
         .content-section.active { display: block; }
 
         .row { display: flex; align-items: center; margin-bottom: 12px; gap: 8px; font-size: 14px; width: 100%; }
@@ -32,15 +33,12 @@
         .selector-box { background: #1a1a1a; display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 2px solid var(--main-color); margin-bottom: 10px; cursor: pointer; border-radius: 4px; }
         .fov-box { background: #1a1a1a; border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: space-between; margin: 10px 0; }
         
-        .radio-group { display: flex; gap: 20px; margin-top: 5px; }
-        .radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; }
-        .radio-circle { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #444; position: relative; }
-        .radio-circle.active { background: var(--main-color); border-color: var(--main-color); box-shadow: inset 0 0 0 4px #1a1a1a; }
-
+        .footer-status { margin-top: 15px; font-size: 12px; color: #00ff00; font-weight: bold; border-top: 1px solid #222; padding-top: 10px; }
+        .btn-boost { width: 100%; background: #222; border: 1px solid var(--main-color); color: white; padding: 10px; border-radius: 5px; cursor: pointer; margin-top: 5px; font-size: 11px; font-weight: bold; }
+        .ia-container { background: #111; border: 1px solid #333; padding: 10px; border-radius: 8px; margin-top: 10px; max-height: 150px; overflow-y: auto; }
+        .sensi-card { background: #1a1a1a; border-left: 3px solid var(--main-color); padding: 8px; margin-top: 8px; font-size: 11px; position: relative; }
         .color-group { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
         .color-box { width: 28px; height: 28px; border-radius: 5px; cursor: pointer; border: 2px solid #444; }
-
-        .footer-status { margin-top: 15px; font-size: 12px; color: #00ff00; font-weight: bold; border-top: 1px solid #222; padding-top: 10px; }
     </style>
 </head>
 <body>
@@ -56,11 +54,12 @@
 <div id="floating-icon" onclick="toggleMenu()"></div>
 
 <div class="menu-container" id="main-menu">
-    <div class="header"><span>FFH4X MOD iOS V4.0 1.108.X</span><span onclick="toggleMenu()" style="cursor:pointer">✕</span></div>
+    <div class="header"><span>FFH4X MOD iOS V4.0</span><span onclick="toggleMenu()" style="cursor:pointer">✕</span></div>
     
     <div class="tabs">
         <div class="tab active" onclick="openTab('modo', this)">🎮 Modo</div>
         <div class="tab" onclick="openTab('aimbot', this)">🎯 Aimbot</div>
+        <div class="tab" onclick="openTab('sensi-pro', this)">⚡ Sensi Pro</div>
         <div class="tab" onclick="openTab('esp', this)">👁️ ESP</div>
         <div class="tab" onclick="openTab('bypass', this)">🛡️ Bypass</div>
         <div class="tab" onclick="openTab('info', this)">📇 Info</div>
@@ -72,48 +71,50 @@
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>CS ranque</span></div>
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>AP</span></div>
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>X1</span></div>
-        <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>Modo da Garena</span></div>
         <div class="footer-status">Status: ONLINE</div>
     </div>
 
     <div id="aimbot" class="content-section">
         <div class="selector-box" onclick="mudarHS()"><span id="txtHS">HS 100%</span><span style="color:var(--main-color)">▼</span></div>
         
-        <div class="row">
-            <div style="display:flex; align-items:center; gap:8px;">
-                <div class="check-box" onclick="toggleCheck(this)"></div><span>Macro</span>
-                <input type="text" style="width:30px; background:#1a1a1a; border:1px solid #444; color:white; text-align:center;" maxlength="1">
-            </div>
-            <div style="margin-left:auto; display:flex; align-items:center; gap:5px; font-size:11px; color:#aaa;">
-                <div class="check-box" onclick="toggleCheck(this)"></div><span>No recoil</span>
-            </div>
+        <div class="row" style="background:#1a1a1a; padding:8px; border-radius:5px; border:1px dashed var(--main-color);">
+            <div class="check-box" id="iaDynamic" onclick="toggleCheck(this)"></div>
+            <span style="color:var(--main-color); font-weight:bold;">IA DYNAMIC ASSIST (LEGIT)</span>
         </div>
+        <p style="font-size:10px; color:#aaa; margin-top:-8px; margin-bottom:12px;">*Ajusta a mira automaticamente: Capa ao puxar, Peito ao segurar.</p>
 
-        <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>Ativar Aimbot</span><div style="margin-left:auto;"><div class="check-box" onclick="toggleCheck(this)"></div><span style="font-size:11px; color:#aaa;">Ignorar derrubados</span></div></div>
-        <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>Exibir Círculo do FOV</span><div style="margin-left:auto;"><div class="check-box" onclick="toggleCheck(this)"></div><span style="font-size:11px; color:#aaa;">Ignorar paredes</span></div></div>
-        <div class="fov-box"><input type="range" style="width:70%; accent-color:var(--main-color);" min="0" max="180" value="0.0" step="0.1" oninput="updateFov(this.value)"><span id="fovVal">0.0</span><span style="color:#bbb; font-size:11px;">FOV</span></div>
-        <div class="selector-box" onclick="mudarTarget()"><span id="txtTarget">Cabeça</span><span style="color:var(--main-color)">▼ Target</span></div>
-        
-        <p style="font-size:12px; color:#aaa; margin-top:5px;">Tipo de Aimbot:</p>
-        <div class="radio-group">
-            <div class="radio-item" onclick="selectType('atirar')"><div class="radio-circle active" id="dotAtirar"></div> Ao Atirar</div>
-            <div class="radio-item" onclick="selectType('olhar')"><div class="radio-circle" id="dotOlhar"></div> Ao Olhar</div>
+        <div class="row">
+            <div class="check-box" onclick="toggleCheck(this)"></div><span>Macro</span>
+            <input type="text" style="width:30px; background:#1a1a1a; border:1px solid #444; color:white; text-align:center;" maxlength="1">
+            <div style="margin-left:auto; display:flex; align-items:center; gap:5px;"><div class="check-box" onclick="toggleCheck(this)"></div><span>No recoil</span></div>
         </div>
+        <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>Ativar Aimbot</span><div style="margin-left:auto;"><div class="check-box" onclick="toggleCheck(this)"></div><span style="font-size:11px;">Ignorar derrubados</span></div></div>
+        <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>Exibir Círculo do FOV</span><div style="margin-left:auto;"><div class="check-box" onclick="toggleCheck(this)"></div><span style="font-size:11px;">Ignorar paredes</span></div></div>
+        
+        <div class="fov-box"><input type="range" style="width:70%; accent-color:var(--main-color);" min="0" max="180" value="0.0" step="0.1" oninput="updateFov(this.value)"><span id="fovVal">0.0</span><span>FOV</span></div>
+        
+        <div class="selector-box" onclick="mudarTarget()"><span id="txtTarget">Cabeça</span><span style="color:var(--main-color)">▼</span></div>
         <div class="footer-status">Status: ONLINE</div>
+    </div>
+
+    <div id="sensi-pro" class="content-section">
+        <p style="font-size: 11px; color: var(--main-color); font-weight: bold;">IA GENERATOR SENSI</p>
+        <button class="btn-boost" onclick="gerarSensiAleatoria()">🎲 SORTEAR NOVA SENSI</button>
+        <div class="ia-container" id="iaContainer"></div>
+        <button class="btn-boost" style="background:#332222; border-color:#ff4444; color:#ff4444; margin-top:10px;" onclick="document.getElementById('iaContainer').innerHTML = ''">🗑️ LIMPAR HISTÓRICO</button>
     </div>
 
     <div id="esp" class="content-section">
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>ESP Caixa</span></div>
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>ESP Linha</span></div>
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>ESP Esqueleto</span></div>
-        <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>ESP Color</span></div>
         <div class="footer-status">Status: ONLINE</div>
     </div>
 
     <div id="bypass" class="content-section">
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>Bypass Jogo</span></div>
         <div class="row"><div class="check-box" onclick="toggleCheck(this)"></div><span>Bypass Painel</span></div>
-        <div class="footer-status" style="color: #00ffff;">Status: PROTEGIDO</div>
+        <div class="footer-status" style="color:#00ffff">Status: PROTEGIDO</div>
     </div>
 
     <div id="info" class="content-section">
@@ -134,15 +135,24 @@
 </div>
 
 <script>
-    function checkLogin() { if (document.getElementById('passInput').value === "user444") { document.getElementById('login-screen').style.display = "none"; document.getElementById('main-menu').style.display = "block"; } else { alert("Senha incorreta!"); } }
+    function checkLogin() { if (document.getElementById('passInput').value === "user444") { document.getElementById('login-screen').style.display = "none"; document.getElementById('main-menu').style.display = "block"; } else { alert("Senha!"); } }
     function toggleMenu() { const m = document.getElementById('main-menu'); const i = document.getElementById('floating-icon'); m.style.display = (m.style.display === "none") ? "block" : "none"; i.style.display = (m.style.display === "none") ? "block" : "none"; }
     function openTab(tabId, el) { document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active')); document.querySelectorAll('.tab').forEach(t => t.classList.remove('active')); document.getElementById(tabId).classList.add('active'); el.classList.add('active'); }
     function toggleCheck(el) { el.classList.toggle('active'); }
     function updateFov(v) { document.getElementById('fovVal').innerText = parseFloat(v).toFixed(1); }
     function changeColor(c) { document.documentElement.style.setProperty('--main-color', c); }
-    function selectType(t) { document.getElementById('dotAtirar').classList.toggle('active', t === 'atirar'); document.getElementById('dotOlhar').classList.toggle('active', t === 'olhar'); }
+    
     const tHS = ["HS 100%", "HS Variado", "HS 0%"]; let iH = 0; function mudarHS() { iH = (iH + 1) % tHS.length; document.getElementById('txtHS').innerText = tHS[iH]; }
     const tAlvos = ["Cabeça", "Peito", "Pescoço"]; let iA = 0; function mudarTarget() { iA = (iA + 1) % tAlvos.length; document.getElementById('txtTarget').innerText = tAlvos[iA]; }
+
+    function gerarSensiAleatoria() {
+        const c = document.getElementById('iaContainer');
+        const g=90+Math.floor(Math.random()*10), r=85+Math.floor(Math.random()*15), x2=92+Math.floor(Math.random()*8), x4=88+Math.floor(Math.random()*12), d=411+Math.floor(Math.random()*400);
+        const card = document.createElement('div');
+        card.className = "sensi-card";
+        card.innerHTML = `GERAL:${g} RED:${r} 2X:${x2} 4X:${x4} DPI:${d}`;
+        c.prepend(card);
+    }
 </script>
 </body>
 </html>
